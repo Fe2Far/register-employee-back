@@ -8,4 +8,8 @@ import com.toofar.employee.models.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
+	Employee findByEmail(String email);
+	
+	Employee findByName(String name);
+
 }

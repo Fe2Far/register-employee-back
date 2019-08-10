@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.far.ionicapp.domain.Cliente;
-import com.far.ionicapp.dto.ClienteDTO;
 import com.toofar.employee.dtos.EmployeeDto;
 import com.toofar.employee.exceptions.DataIntegrityException;
 import com.toofar.employee.models.Employee;
