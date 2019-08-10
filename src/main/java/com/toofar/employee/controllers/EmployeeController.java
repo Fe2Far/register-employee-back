@@ -2,6 +2,7 @@ package com.toofar.employee.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -33,7 +34,7 @@ public class EmployeeController {
 	private EmployeeService service;
 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Employee> find(@PathVariable Integer id) throws ObjectNotFoundException {		
+	public ResponseEntity<Employee> findById(@PathVariable Integer id) throws ObjectNotFoundException {		
 		Employee obj = service.find(id); 
 		return ResponseEntity.ok().body(obj);
 	}
@@ -54,7 +55,7 @@ public class EmployeeController {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody EmployeeDto objDTO,@PathVariable Integer id) {
 		Employee obj = service.fromDTO(objDTO);

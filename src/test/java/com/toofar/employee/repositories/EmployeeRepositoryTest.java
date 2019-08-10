@@ -3,6 +3,8 @@ package com.toofar.employee.repositories;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Optional;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,13 +34,13 @@ public class EmployeeRepositoryTest {
 
 	@Test
 	public void testFindByEmail() {
-		Employee employee = this.employeeRepository.findByEmail(EMAIL);
-		assertEquals(EMAIL, employee.getEmail());
+		Optional<Employee> employeeOptional = this.employeeRepository.findByEmail(EMAIL);
+		assertEquals(EMAIL, employeeOptional.get().getEmail());
 	}
-	
+
 	@Test
 	public void testFindByEmailInvalid() {
-		Employee employee = this.employeeRepository.findByEmail(EMAIL);
+		Optional<Employee> employee = this.employeeRepository.findByEmail(EMAIL);
 		assertNotNull(employee);
 	}
 	

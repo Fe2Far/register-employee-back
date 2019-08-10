@@ -23,6 +23,11 @@ public class EmployeeService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id : " + id + ", Tipo : " + Employee.class.getName()));
 	}
 	
+	public Employee findByEmail(String email) {
+		Optional<Employee> obj = employeeRepository.findByEmail(email);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Email : " + email + ", Tipo : " + Employee.class.getName()));
+	}
+	
 	public List<Employee> findAll() {
 		return employeeRepository.findAll();
 	}
