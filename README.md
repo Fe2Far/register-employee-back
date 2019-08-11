@@ -13,7 +13,16 @@ git clone https://github.com/Fe2Far/register-employee-back.git
 cd register-employee-back
 mvn spring-boot:run
 Acesse os endpoints através da url http://localhost:8080
+
 ```
+
+### Documentação via Swagger
+```
+Acesse documentação dos endpoints pela url http://localhost:8080/swagger-ui.html
+
+```
+
+
 ### Importando o projeto no Eclipse ou STS
 No terminal, execute a seguinte operação:
 ```
