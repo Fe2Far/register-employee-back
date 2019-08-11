@@ -2,7 +2,6 @@ package com.toofar.employee.controllers;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -20,10 +19,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.toofar.employee.dtos.EmployeeDto;
 import com.toofar.employee.exceptions.DataIntegrityException;
+import com.toofar.employee.exceptions.ObjectNotFoundException;
 import com.toofar.employee.models.Employee;
+import com.toofar.employee.response.Response;
 import com.toofar.employee.services.EmployeeService;
-
-import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value="/employee")
@@ -34,9 +33,16 @@ public class EmployeeController {
 	private EmployeeService service;
 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Employee> findById(@PathVariable Integer id) throws ObjectNotFoundException {		
-		Employee obj = service.find(id); 
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<Response<Employee>> findById(@PathVariable Integer id) throws ObjectNotFoundException {		
+		Response<Employee> response = new Response<Employee>();
+		try {
+			Employee obj = service.find(id);
+			response.setData(obj);
+		} catch(ObjectNotFoundException e) {
+			response.getErrors().add("Funcionário não encontrada para o id " + id);
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok().body(response);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)

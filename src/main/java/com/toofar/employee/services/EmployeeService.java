@@ -17,8 +17,8 @@ public class EmployeeService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
-	
-	public Employee find(Integer id) {
+
+	public Employee find(Integer id)  {
 		Optional<Employee> obj = employeeRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id : " + id + ", Tipo : " + Employee.class.getName()));
 	}
