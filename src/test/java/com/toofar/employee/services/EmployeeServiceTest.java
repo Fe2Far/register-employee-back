@@ -41,7 +41,7 @@ public class EmployeeServiceTest {
 
 	@Test
 	public void testFindById() {
-		Employee employee = this.employeeService.find(ID);
+		Employee employee = this.employeeService.findById(ID);
 		assertTrue(employee != null);
 	}
 	

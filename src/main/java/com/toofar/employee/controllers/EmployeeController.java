@@ -21,8 +21,10 @@ import com.toofar.employee.dtos.EmployeeDto;
 import com.toofar.employee.exceptions.DataIntegrityException;
 import com.toofar.employee.exceptions.ObjectNotFoundException;
 import com.toofar.employee.models.Employee;
+import com.toofar.employee.models.Sector;
 import com.toofar.employee.response.Response;
 import com.toofar.employee.services.EmployeeService;
+import com.toofar.employee.services.SectorService;
 
 @RestController
 @RequestMapping(value="/employee")
@@ -31,12 +33,15 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService service;
+	
+	@Autowired
+	private SectorService sectorService;
 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<Response<Employee>> findById(@PathVariable Integer id) throws ObjectNotFoundException {		
 		Response<Employee> response = new Response<Employee>();
 		try {
-			Employee obj = service.find(id);
+			Employee obj = service.findById(id);
 			response.setData(obj);
 		} catch(ObjectNotFoundException e) {
 			response.getErrors().add("Funcionário não encontrada para o id " + id);
@@ -64,10 +69,22 @@ public class EmployeeController {
 
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody EmployeeDto objDTO,@PathVariable Integer id) {
+		
+		Response<Employee> response = new Response<Employee>();
 		Employee obj = service.fromDTO(objDTO);
 		obj.setId(id);
-		obj = service.update(obj);
+        
+		try {	
+			Sector s = sectorService.findById(objDTO.getSector().getId());
+			obj.setSector(s);
+			obj = service.update(obj);
+		} catch(ObjectNotFoundException e) {
+			response.getErrors().add("Departamento não encontrada para o id " + objDTO.getSector().getId());
+			return ResponseEntity.badRequest().body(null);
+		}
+
 		return ResponseEntity.noContent().build();
+
 	}
 
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)

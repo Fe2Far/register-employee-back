@@ -2,10 +2,14 @@ package com.toofar.employee.models;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Employee implements Serializable {
@@ -16,20 +20,27 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@Column(name = "email", nullable = false)
 	private String email;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="sector_id")
+	private Sector sector;
 
 	public Employee() {
 		super();
 	}
 
 
-	public Employee(Integer id, String nome, String email) {
+	public Employee(Integer id, String nome, String email, Sector sector) {
 		super();
 		this.id = id;
 		this.name = nome;
 		this.email = email;
+		this.sector = sector;
 	}
 	
 
@@ -55,6 +66,15 @@ public class Employee implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Sector getSector() {
+		return sector;
+	}
+
+
+	public void setSector(Sector sector) {
+		this.sector = sector;
 	}
 
 

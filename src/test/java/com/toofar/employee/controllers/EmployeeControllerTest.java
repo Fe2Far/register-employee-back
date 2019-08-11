@@ -42,7 +42,7 @@ public class EmployeeControllerTest {
 	@Test
 	public void testFindValidEmployee() throws Exception {
 
-		BDDMockito.given(this.employeeService.find(ID)).willReturn(this.getEmployeeData());
+		BDDMockito.given(this.employeeService.findById(ID)).willReturn(this.getEmployeeData());
 
 		mvc.perform(MockMvcRequestBuilders.get(FIND_EMPLOYEE_BY_ID_URL + ID)
 				.accept(MediaType.APPLICATION_JSON))

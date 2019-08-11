@@ -19,6 +19,8 @@ public class EmployeeDto {
 	@Email(message="Email inválido")
 	private String email;
 
+	private SectorDto sector;
+
 	public EmployeeDto() {
 		super();
 	}
@@ -27,6 +29,7 @@ public class EmployeeDto {
 		this.id = obj.getId();
 		this.name = obj.getName();
 		this.email = obj.getEmail();
+		this.sector = new SectorDto(obj.getSector().getId(),obj.getSector().getName());
 	}
   
 	public Integer getId() {
@@ -51,6 +54,14 @@ public class EmployeeDto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public SectorDto getSector() {
+		return sector;
+	}
+
+	public void setSector(SectorDto sector) {
+		this.sector = sector;
 	}
 
 }

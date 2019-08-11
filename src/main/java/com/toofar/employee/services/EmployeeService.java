@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.toofar.employee.dtos.EmployeeDto;
 import com.toofar.employee.exceptions.ObjectNotFoundException;
 import com.toofar.employee.models.Employee;
+import com.toofar.employee.models.Sector;
 import com.toofar.employee.repositories.EmployeeRepository;
 
 @Service
@@ -18,7 +19,7 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	public Employee find(Integer id)  {
+	public Employee findById(Integer id)  {
 		Optional<Employee> obj = employeeRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id : " + id + ", Tipo : " + Employee.class.getName()));
 	}
@@ -40,7 +41,7 @@ public class EmployeeService {
 	}
 
 	public Employee update(Employee obj) {
-		Employee newObj = find(obj.getId());
+		Employee newObj = findById(obj.getId());
 		updateObject(newObj,obj);
 		return employeeRepository.save(newObj);
 	}
@@ -48,15 +49,17 @@ public class EmployeeService {
 	public void updateObject(Employee newObj,Employee obj) {
 		newObj.setName(obj.getName());
 		newObj.setEmail(obj.getEmail());
+		newObj.setSector(obj.getSector());
 	}
 
 	public void delete(Integer id) {
-		find(id);
+		findById(id);
 		employeeRepository.deleteById(id);
 	}
 
 	public Employee fromDTO(EmployeeDto objDTO) {
-		return new Employee(objDTO.getId(), objDTO.getName(), objDTO.getEmail()); 
+		return new Employee(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), 
+				new Sector(objDTO.getSector().getId(),objDTO.getSector().getName())); 
 	}
 
 }
