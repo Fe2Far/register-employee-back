@@ -51,11 +51,15 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<EmployeeDto>> findAll(){		
+	public ResponseEntity<Response<List<EmployeeDto>>> findAll(){		
+		Response<List<EmployeeDto>> response = new Response<List<EmployeeDto>>();
 		List<Employee> lista= service.findAll(); 
 		List<EmployeeDto> listDTO = lista.stream()
-				.map(obj -> new EmployeeDto(obj)).collect(Collectors.toList()); 
-		return ResponseEntity.ok().body(listDTO);
+				.map(obj -> new EmployeeDto(obj)).collect(Collectors.toList());
+		
+		response.setData(listDTO);
+		
+		return ResponseEntity.ok().body(response);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)

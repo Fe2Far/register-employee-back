@@ -28,6 +28,11 @@ public class EmployeeService {
 		Optional<Employee> obj = employeeRepository.findByEmail(email);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Email : " + email + ", Tipo : " + Employee.class.getName()));
 	}
+
+	public List<Employee> findBySector(Integer sectorId) {
+		Optional<List<Employee>> list = employeeRepository.findBySector(sectorId);
+		return list.orElseThrow(() -> new ObjectNotFoundException("Objetos não encontrados! Setpr : " + sectorId + ", Tipo : " + Employee.class.getName()));
+	}
 	
 	public List<Employee> findAll() {
 		return employeeRepository.findAll();

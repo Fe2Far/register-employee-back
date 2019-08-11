@@ -47,9 +47,9 @@ public class EmployeeControllerTest {
 		mvc.perform(MockMvcRequestBuilders.get(FIND_EMPLOYEE_BY_ID_URL + ID)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.id").value(ID))
-				.andExpect(jsonPath("$.name", equalTo(NAME)))
-			    .andExpect(jsonPath("$.email", equalTo(EMAIL)));
+				.andExpect(jsonPath("$.data.id").value(ID))
+				.andExpect(jsonPath("$.data.name", equalTo(NAME)))
+			    .andExpect(jsonPath("$.data.email", equalTo(EMAIL)));
 	}
 
 	private Employee getEmployeeData() {
